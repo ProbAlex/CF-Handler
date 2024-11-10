@@ -13,6 +13,9 @@ Directions:
 - ./build.sh
 - ./catflipper
 
+
+
+
 **If you have Python and just wanna run**
 - to download: wget https://github.com/ProbAlex/CF-Handler/releases/latest/download/CF-Handler.py && chmod +x CF-Handler.py
 - to run: python3 CF-Handler.py
