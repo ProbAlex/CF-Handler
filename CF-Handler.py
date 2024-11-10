@@ -3,17 +3,16 @@ import time
 import threading
 import sys
 
-def send_stats_command(process):
-    """Periodically sends /stats command to the process"""
+def autostats(process):
     while process.poll() is None:
         try:
             process.stdin.write(b"/stats\n")
             process.stdin.flush()
         except:
             break
-        time.sleep(1200)
+        time.sleep(3600)
 
-def handle_user_input(process):
+def user_input(process):
     """Handles user input and sends it to the process"""
     while process.poll() is None:
         try:
@@ -37,18 +36,18 @@ def run_and_monitor():
             universal_newlines=False
         )
         stats_thread = threading.Thread(
-            target=send_stats_command,
+            target=autostats,
             args=(process,),
             daemon=True
         )
         stats_thread.start()
         input_thread = threading.Thread(
-            target=handle_user_input,
+            target=user_input,
             args=(process,),
             daemon=True
         )
         input_thread.start()
-        def print_output():
+        def output():
             while process.poll() is None:
                 line = process.stdout.readline()
                 if line:
@@ -56,7 +55,7 @@ def run_and_monitor():
                     sys.stdout.buffer.flush()
 
         output_thread = threading.Thread(
-            target=print_output,
+            target=output,
             daemon=True
         )
         output_thread.start()
