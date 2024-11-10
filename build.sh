@@ -1,5 +1,5 @@
 #!/bin/bash
-
+pip install -r requirements.txt
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "Compiling for Linux..."
     nuitka --standalone --onefile CF-Handler.py
